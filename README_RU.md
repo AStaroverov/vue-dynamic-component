@@ -49,9 +49,9 @@ new Vue({
 *  ``options``
   * type: Boolean
   * value:
-    * cache - Когда вы передаете в компонент template и model из них создается экземпляр компонента, он же и кэшируется. В последствии при передаче в компонент идентичных template и model будет активирован старый, закэшированный компонент, если данная опция установленна в состояние true. Пример работы с [cache](./index.html)
+    * cache - Когда вы передаете в компонент template и model из них создается экземпляр компонента, он же и кэшируется. В последствии при передаче в компонент идентичных template и model будет активирован старый, закэшированный компонент, если данная опция установленна в состояние true. Пример работы с [cache](./index.html).
       * type: Boolean
       * default: true
 
 ## Plugin options
-``componentName``: change default component name (default ``'vue-dynamic-template'``)
+``componentName``: изменяет имя компонента (стандартное имя ``'vue-dynamic-template'``)
