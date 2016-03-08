@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue dynamic template</title>
+</head>
+<body id='app'>
+  <div>
+    <vue-dynamic-template v-for="n in 3" :template="tmpls[n]" :model="mdls[n]"></vue-dynamic-template>
+  </div>
+  <hr>
+  <div>
+    <button @click="index += 1">+1</button>
+    <button @click="index -= 1">-1</button>
+    <span>general index</span> <br>
+    <input type="checkbox" v-model="cache1"> cache = {{cache1}}
+    <vue-dynamic-template :template="tmpls[index]" :model="mdls[index]" :options="{cache: cache1}"></vue-dynamic-template>
+  </div>
+  <br>
+  <div>
+    <button @click="itmpl += 1">+1</button>
+    <button @click="itmpl -= 1">-1</button>
+    <span>template index</span>
+    <br>
+    <button @click="imdl += 1">+1</button>
+    <button @click="imdl -= 1">-1</button>
+    <span>models index</span> <br>
+    <input type="checkbox" v-model="cache2"> cache = {{cache2}}
+    <vue-dynamic-template :template="tmpls[itmpl]" :model="mdls[imdl]"></vue-dynamic-template>
+  </div>
+
+  <script src="./vue.js" charset="utf-8"></script>
+  <script src="./dist/vue-dynamic-template.js"></script>
+  <script>
+    Vue.use(vueDynamicTemplate)
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          index: 0,
+          itmpl: 0,
+          imdl: 0,
+          cache1: true,
+          cache2: true,
+          tmpls: [
+            '<div>1 template, {{msg}} model <button @click="msg += \'!\'">add !</button></div>',
+            '<div>2 template, {{msg}} model</div>',
+            '<div>3 template, {{msg}} model</div>',
+          ],
+          mdls: [
+            {
+              data() {
+                return {msg: 'first'}
+              },
+            },
+            {
+              data() {
+                return {msg: 'second'}
+              }
+            },
+            {
+              data() {
+                return {msg: 'third'}
+              }
+            },
+          ]
+        }
+      },
+    })
+  </script>
+</body>
+</html>
