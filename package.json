@@ -1,6 +1,6 @@
 {
   "name": "vue-dynamic-component",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Component for fast creating dynamical components.",
   "main": "/dist/vue-dynamic-component.min.js",
   "scripts": {
