@@ -13,8 +13,8 @@
     * required: false
     * type: String
   * inlineTemplate - Использование шаблона из DOM-a, подобно [этому](http://vuejs.org/guide/components.html#Inline_Template)
-  * required: false
-  * type: Boolean
+    * required: false
+    * type: Boolean
 
 ## plugin options
 ``componentName``: изменяет имя компонента (стандартное имя ``'vue-dynamic-component'``)
