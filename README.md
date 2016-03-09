@@ -2,7 +2,32 @@
 Component for fast creating dynamical components. <br/>
 This component can help for fast migrate from pjax to vue
 
-## [Usage and example](./index.html)
+## Usage
+```javascript
+import vueDynamicComponent from 'vue-dynamic-component'
+
+Vue.use(vueDynamicComponent [, {componentName: 'name-for-component'}])
+
+new Vue({
+  ...
+  data() {
+    return {
+      comp: {
+        template: '<div>default component with {{msg}} <button @click="msg += \'!\'">add !</button></div>',
+        data() {
+          return {msg: 'some text'}
+        },
+      }
+    }
+  },
+  ...
+})
+```
+```html
+<vue-dynamic-component :component="comp"></vue-dynamic-component>
+```
+
+## [Example](./index.html)
 
 ## props :component
 * required: true
