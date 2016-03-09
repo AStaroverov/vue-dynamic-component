@@ -1,4 +1,4 @@
-# vue-dynamic-component [ru](./README_RU.md)
+# vue-dynamic-component ([ru](./README_RU.md))
 Component for fast creating dynamical components. <br/>
 This component can help for fast migrate from pjax to vue
 
