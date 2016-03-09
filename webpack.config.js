@@ -1,12 +1,12 @@
 var webpack = require('webpack');
 
 module.exports = {
-  entry: ["babel-polyfill", "./src/index.js"],
+  entry: ["./src/index.js"],
   output: {
     path: "./dist",
     publicPath: "/dist/",
-    filename: "vue-dynamic-template.js",
-    library: ["vueDynamicTemplate"],
+    filename: "vue-dynamic-component.js",
+    library: ["vueDynamicComponent"],
     libraryTarget: "umd"
   },
   module: {
@@ -24,7 +24,7 @@ module.exports = {
 }
 
 if (process.env.NODE_ENV === 'production') {
-  module.exports.output.filename = "vue-dynamic-template.min.js",
+  module.exports.output.filename = "vue-dynamic-component.min.js",
   module.exports.plugins = [
     new webpack.DefinePlugin({
       'process.env': {

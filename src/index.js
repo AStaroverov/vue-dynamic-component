@@ -1,60 +1,62 @@
-import objectHash from 'object-hash'
-
 export let install = function(Vue, {
-  componentName = 'vue-dynamic-template'
+  componentName = 'vue-dynamic-component'
 } = {}) {
 
 let componentModel = {
-  template: '<div><component :is="activeComponentName" keep-alive></component></div>',
+  template: '<component :is="activeComponentName" keep-alive></component>',
   props: {
-    template: {
-      type: String,
+    component: {
+      type: Object,
       required: true,
-    },
-    model: {
-      type: Object,
-      default: {}
-    },
-    options: {
-      type: Object,
-      coerce(opt) {
-        return Object.assign({
-          cache: true,
-        }, opt)
-      }
-    },
+      coerce: val => Object.create(val || {})
+    }
   },
   data() {
     return {
+      inlineTemplate: this.$options.el.innerHTML || false,
+      componentIndex: 0,
       activeComponentName: '',
     }
   },
   watch: {
-    'template && model': 'render',
+    'component': 'render',
   },
   created() {
     this.render()
   },
   methods: {
     render() {
+      let {keepAliveId, inlineTemplate} = this.component
+
+      delete this.component.keepAliveId
+      delete this.component.inlineTemplate
+
       this.createComponent({
-        model:          this.model,
-        template:       this.template,
-        options:        this.options,
-        templateInline: this.templateInline
+        keepAliveId,
+        inlineTemplate,
+        component: this.component,
       })
     },
-    createComponent({model, template, options}) {
-      if (!template || template.length === 0) return
+    createComponent({component, keepAliveId, inlineTemplate}) {
+      if (!component && !keepAliveId) return
 
-      let component =  Object.assign({}, {template: template}, model)
-      let id = objectHash(component)
+      if (inlineTemplate && this.inlineTemplate) {
+        component.template = this.inlineTemplate
+      }
 
-      if (options.cache && this.$options.components[id]) {
-        this.activeComponentName = id
-      } else if (template && template.length > 0) {
-        this.$options.components[id] = Vue.extend(component)
-        this.activeComponentName = id
+      if (keepAliveId && this.$options.components[keepAliveId]) {
+        this.activeComponentName = keepAliveId
+      } else if (component.template) {
+        let name
+
+        if (keepAliveId) {
+          name = keepAliveId
+        } else {
+          name = 'componentIndex' + this.componentIndex++
+        }
+
+        this.$options.components[name] = Vue.extend(component)
+        this.activeComponentName = name
       }
     }
   }

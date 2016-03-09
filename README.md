@@ -1,58 +1,21 @@
-# vue-dynamic-template ([ru](./README_RU.md))
-Component for fast creating components with dynamic templates and models. <br/>
-This component can help for fast migrate from pjax to vue.
+# vue-dynamic-component
+Component for fast creating dynamical components. <br/  
+This component can help for fast migrate from pjax to vue
 
-## Usage
-```
-<div id='app'>
-  <vue-dynamic-template :template="tmpl" :model="mdl"></vue-dynamic-template>
-</div>
-```
-```
-import vueDynamicTemplate from 'vue-dynamic-template'
+## [Usage and example](./index.html)
 
-Vue.use(vueDynamicTemplate)
-
-new Vue({
-  el: '#app',
-  data() {
-    return {
-      tmpl: `
-        <span>text + {{text}}<span>
-        <vue-my-component></vue-my-component>
-      `,
-      mdl: {
-        data() {
-          return {
-            text: 'text from model'
-          }
-        },
-        components: {
-          'vue-my-component': {
-            template: '<div>my component</div>'
-          }
-        }
-      }
-    }
-  },
-})
-```
-## Component props
-* ``template``
-  * type: String
-  * required: true
-* ``model``
-  * type: Object
-  * default: {}
-*  ``options``
+## props :component
+* required: true
+* type: Object
+* value
+  * Default
+  * The standard content component: data, methods, watch, events, etc
+  * keepAliveId - ID for caching the component by using [keep-alive](http://vuejs.org/guide/components.html#keep-alive)
+    * required: false
+    * type: String
+  * inlineTemplate - Using the template from DOM, like [this](http://vuejs.org/guide/components.html#Inline_Template)
+  * required: false
   * type: Boolean
-  * value:
-    * cache - soon...
-      * type: Boolean
-      * default: true
 
-## Plugin options
-``componentName``: change default component name (default ``'vue-dynamic-template'``)
-
-## Example
-(here)[]
+## plugin options
+``componentName``: changes the name of the component (default name ``'vue-dynamic-component'``)

@@ -2,68 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Vue dynamic template</title>
+  <title>Vue dynamic component</title>
 </head>
 <body id='app'>
   <div>
-    <vue-dynamic-template v-for="n in 3" :template="tmpls[n]" :model="mdls[n]"></vue-dynamic-template>
+    <vue-dynamic-component v-for="n in 4" :component="comp[n]">
+      <div>component with inlineTemplate {{msg}} <button @click="msg += '!'">add !</button></div>
+    </vue-dynamic-component>
   </div>
   <hr>
   <div>
     <button @click="index += 1">+1</button>
     <button @click="index -= 1">-1</button>
-    <span>general index</span> <br>
-    <input type="checkbox" v-model="cache1"> cache = {{cache1}}
-    <vue-dynamic-template :template="tmpls[index]" :model="mdls[index]" :options="{cache: cache1}"></vue-dynamic-template>
-  </div>
-  <br>
-  <div>
-    <button @click="itmpl += 1">+1</button>
-    <button @click="itmpl -= 1">-1</button>
-    <span>template index</span>
-    <br>
-    <button @click="imdl += 1">+1</button>
-    <button @click="imdl -= 1">-1</button>
-    <span>models index</span> <br>
-    <input type="checkbox" v-model="cache2"> cache = {{cache2}}
-    <vue-dynamic-template :template="tmpls[itmpl]" :model="mdls[imdl]"></vue-dynamic-template>
+    <span>component index = {{index}}</span> <br>
+    <vue-dynamic-component  :component="comp[index]">
+      <div>component with inlineTemplate {{msg}} <button @click="msg += '!'">add !</button></div>
+    </vue-dynamic-component>
   </div>
 
-  <script src="./vue.js" charset="utf-8"></script>
-  <script src="./dist/vue-dynamic-template.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.17/vue.js" charset="utf-8"></script>
+  <script src="./dist/vue-dynamic-component.js"></script>
   <script>
-    Vue.use(vueDynamicTemplate)
+    Vue.use(vueDynamicComponent)
+
+    var comp = [
+      {
+        template: '<div>default component with {{msg}} <button @click="msg += \'!\'">add !</button></div>',
+        data() {
+          return {msg: 'nothing'}
+        },
+      },
+      {
+        keepAliveId: 'id123',
+        template: '<div>component with {{msg}} <button @click="msg += \'!\'">add !</button></div>',
+        data() {
+          return {msg: 'keepAliveId'}
+        },
+      },
+      {
+        inlineTemplate: true,
+        data() {
+          return {msg: ''}
+        },
+      },
+      {
+        keepAliveId: 'id124',
+        inlineTemplate: true,
+        data() {
+          return {msg: 'and keepAliveId'}
+        },
+      },
+    ]
     new Vue({
       el: '#app',
       data() {
         return {
           index: 0,
-          itmpl: 0,
-          imdl: 0,
-          cache1: true,
-          cache2: true,
-          tmpls: [
-            '<div>1 template, {{msg}} model <button @click="msg += \'!\'">add !</button></div>',
-            '<div>2 template, {{msg}} model</div>',
-            '<div>3 template, {{msg}} model</div>',
-          ],
-          mdls: [
-            {
-              data() {
-                return {msg: 'first'}
-              },
-            },
-            {
-              data() {
-                return {msg: 'second'}
-              }
-            },
-            {
-              data() {
-                return {msg: 'third'}
-              }
-            },
-          ]
+          comp: comp
         }
       },
     })
